@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_Ahkam.css') }}">
+    <title>Edit Nilai - Rapot Ahkam</title>
+</head>
+<body>
+    <div class="wadah_Ahkam">
+        <h2>Ubah Nilai ID: {{ n.id_nilai }}</h2>
+        <p>Data untuk NIS: <strong>{{ n.nis }}</strong></p>
+
+        <form method="POST">
+            <label>Nilai Tugas</label>
+            <input type="number" name="nilai_tugas" value="{{ n.nilai_tugas }}" required min="0" max="100">
+            
+            <label>Nilai UTS</label>
+            <input type="number" name="nilai_uts" value="{{ n.nilai_uts }}" required min="0" max="100">
+            
+            <label>Nilai UAS</label>
+            <input type="number" name="nilai_uas" value="{{ n.nilai_uas }}" required min="0" max="100">
+
+            <label>Deskripsi</label>
+            <textarea name="deskripsi" required>{{ n.deskripsi }}</textarea>
+
+            <button type="submit" class="tombol_Ahkam ubah">Update Data</button>
+            <a href="/" style="display: block; text-align: center; margin-top: 10px; color: #666; text-decoration: none;">Batal</a>
+        </form>
+    </div>
+</body>
+</html>

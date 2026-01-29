@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Rapot - {{ nama_siswa }}</title>
+    <style>
+        /* Gaya Tampilan di Browser */
+        body { font-family: 'Arial', sans-serif; background: #525659; margin: 0; padding: 0; }
+        
+        /* Bar Navigasi Atas (Tidak Ikut Tercetak) */
+        .no-cetak { 
+            position: sticky; top: 0; z-index: 100; text-align: center; 
+            padding: 15px; background: #1a73e8; border-bottom: 2px solid #f4b400; 
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        
+        /* Wadah Kertas A4 Pratinjau */
+        .halaman-kertas { 
+            background: white; width: 210mm; min-height: 297mm; padding: 20mm; 
+            margin: 20px auto; box-shadow: 0 0 10px rgba(0,0,0,0.5); box-sizing: border-box; 
+        }
+
+        /* Header Rapot */
+        .header_cetak { text-align: center; border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 20px; }
+        .header_cetak h2 { margin: 0; font-size: 20px; text-transform: uppercase; }
+        
+        .info_siswa { margin-bottom: 15px; font-weight: bold; font-size: 14px; }
+        
+        /* Tabel Rapot */
+        .tabel_cetak { width: 100%; border-collapse: collapse; margin-bottom: 20px; table-layout: fixed; }
+        .tabel_cetak th, .tabel_cetak td { border: 1px solid black; padding: 10px; text-align: center; word-wrap: break-word; }
+        .tabel_cetak th { background-color: #f2f2f2 !important; font-size: 13px; }
+        
+        .nama_mapel { text-align: left !important; padding-left: 10px; font-weight: bold; width: 35%; }
+        .judul_semester { background: #333; color: #fff; padding: 5px 12px; font-weight: bold; display: inline-block; margin: 15px 0 5px 0; border-radius: 3px; }
+
+        /* Area Tanda Tangan */
+        .area_ttd { margin-top: 40px; width: 100%; border: none; }
+        .area_ttd td { border: none; text-align: center; width: 50%; vertical-align: top; padding-top: 20px; }
+        .ruang_ttd { height: 80px; } 
+
+        /* Tombol Modern */
+        .tombol-unduh { 
+            padding: 10px 20px; color: white; border: none; cursor: pointer; 
+            border-radius: 5px; font-weight: bold; background: #e74c3c; 
+            transition: 0.3s; display: flex; align-items: center; gap: 8px;
+            text-decoration: none; font-size: 14px;
+        }
+        .tombol-unduh:hover { background: #c0392b; }
+        .btn-kembali { color: white; text-decoration: none; font-weight: bold; margin-left: 15px; font-size: 14px; }
+
+        /* Sembunyikan elemen saat Print Manual (Ctrl+P) */
+        @media print {
+            .no-cetak { display: none; }
+            .halaman-kertas { margin: 0; border: none; box-shadow: none; width: 100%; padding: 10mm; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-cetak">
+        <a href="{{ url_for('unduh_pdf_Ahkam', semester='smt1', search_nama=nama_siswa) }}" target="_blank" class="tombol-unduh">
+            <span>📥</span> Unduh PDF Semester 1
+        </a>
+        <a href="{{ url_for('unduh_pdf_Ahkam', semester='smt2', search_nama=nama_siswa) }}" target="_blank" class="tombol-unduh">
+            <span>📥</span> Unduh PDF Semester 2
+        </a>
+        <a href="/" class="btn-kembali">← Kembali ke Data</a>
+    </div>
+
+    <div id="konten-rapot" class="halaman-kertas">
+        <div class="header_cetak">
+            <h2>Laporan Hasil Belajar Siswa (Rapot)</h2>
+            <p style="margin: 5px 0;">Tahun Pelajaran 2025/2026</p>
+        </div>
+
+        <div class="info_siswa">
+            <table style="width: 100%; border: none;">
+                <tr style="border: none;">
+                    <td style="border: none; width: 120px;">Nama Siswa</td>
+                    <td style="border: none;">: {{ nama_siswa }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="judul_semester">SEMESTER 1 (GANJIL)</div>
+        <table class="tabel_cetak">
+            <thead>
+                <tr>
+                    <th class="nama_mapel">Mata Pelajaran</th>
+                    <th width="45">Tgs</th>
+                    <th width="45">UTS</th>
+                    <th width="45">UAS</th>
+                    <th width="55">Akhir</th>
+                    <th>Deskripsi Kemajuan Belajar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in daftar_nilai_Ahkam %}
+                {% if n.id_1 %}
+                <tr>
+                    <td class="nama_mapel">{{ n.nama_mapel }}</td>
+                    <td>{{ n.tugas_1 or '-' }}</td>
+                    <td>{{ n.uts_1 or '-' }}</td>
+                    <td>{{ n.uas_1 or '-' }}</td>
+                    <td style="font-weight:bold;">{{ n.akhir_1 or '-' }}</td>
+                    <td style="text-align:left; font-size:12px; font-style:italic;">{{ n.deskripsi_1 or '-' }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="judul_semester">SEMESTER 2 (GENAP)</div>
+        <table class="tabel_cetak">
+            <thead>
+                <tr>
+                    <th class="nama_mapel">Mata Pelajaran</th>
+                    <th width="45">Tgs</th>
+                    <th width="45">UTS</th>
+                    <th width="45">UAS</th>
+                    <th width="55">Akhir</th>
+                    <th>Deskripsi Kemajuan Belajar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in daftar_nilai_Ahkam %}
+                {% if n.id_2 %}
+                <tr>
+                    <td class="nama_mapel">{{ n.nama_mapel }}</td>
+                    <td>{{ n.tugas_2 or '-' }}</td>
+                    <td>{{ n.uts_2 or '-' }}</td>
+                    <td>{{ n.uas_2 or '-' }}</td>
+                    <td style="font-weight:bold;">{{ n.akhir_2 or '-' }}</td>
+                    <td style="text-align:left; font-size:12px; font-style:italic;">{{ n.deskripsi_2 or '-' }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="area_ttd">
+            <tr>
+                <td>
+                    Mengetahui,<br>Orang Tua/Wali Siswa
+                    <div class="ruang_ttd"></div>
+                    ( ................................... )
+                </td>
+                <td>
+                    Cimahi, {{ tanggal_sekarang }}<br>Wali Kelas / Guru
+                    <div class="ruang_ttd"></div>
+                    ( <strong>Kiki Juniantie, S.Pd.</strong> )
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

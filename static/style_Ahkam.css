@@ -1,0 +1,176 @@
+/* ===== GLOBAL ===== */
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #eef4fb, #f8fafc);
+    padding: 20px;
+    margin: 0;
+    color: #1f2937;
+}
+
+/* ===== CONTAINER (Modern Card) ===== */
+.wadah_Ahkam {
+    max-width: 1100px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 28px;
+    border-radius: 14px;
+    border-top: 6px solid transparent;
+    background-clip: padding-box;
+    box-shadow:
+        0 10px 25px rgba(30, 90, 168, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+    position: relative;
+}
+
+/* Gradient top accent */
+.wadah_Ahkam::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #2563eb, #facc15);
+    border-radius: 14px 14px 0 0;
+}
+
+/* ===== HEADER ===== */
+.kepala_Ahkam {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 26px;
+    border-bottom: 1px solid #e5edf7;
+}
+
+.kepala_Ahkam h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e40af;
+    letter-spacing: 0.4px;
+}
+
+/* ===== TABLE ===== */
+.tabel_Ahkam {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tabel_Ahkam th,
+.tabel_Ahkam td {
+    padding: 14px 12px;
+    text-align: center;
+}
+
+.tabel_Ahkam th {
+    background: linear-gradient(180deg, #1e40af, #1e3a8a);
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.tabel_Ahkam td {
+    border-bottom: 1px solid #eef2f7;
+}
+
+.tabel_Ahkam tr:nth-child(even) {
+    background: #f9fbff;
+}
+
+.tabel_Ahkam tr:hover {
+    background: #eef4ff;
+    transition: background 0.15s ease;
+}
+
+/* ===== TEXT ===== */
+.tebal_Ahkam {
+    font-weight: 600;
+    color: #1e40af;
+}
+
+/* ===== BUTTON (Modern Pill) ===== */
+.tombol_Ahkam {
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.tombol_Ahkam:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+/* Button variants */
+.tambah {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.ubah {
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    color: #1f2937;
+}
+
+.hapus {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.cetak {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.batal {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+}
+
+/* ===== FORM ===== */
+label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1e40af;
+    margin-top: 16px;
+    display: block;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #dbe3f0;
+    background: #f9fbff;
+    transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+/* ===== CETAK ===== */
+.box_cetak_Ahkam {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.ikon_pdf {
+    font-size: 56px;
+    color: #2563eb;
+    margin-bottom: 18px;
+}

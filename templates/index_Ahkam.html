@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_Ahkam.css') }}">
+    <title>Rapot Ahkam - Data Nilai</title>
+</head>
+<body>
+    <div class="wadah_Ahkam">
+        <div class="kepala_Ahkam">
+            <h1>Data Nilai Siswa</h1>
+            <div class="navigasi_Ahkam">
+                <a href="/halaman_cetak_Ahkam?search_nama={{ keyword }}" class="tombol_Ahkam cetak" style="margin-right: 10px;">
+                    🖨️ Cetak Rapot Per Siswa
+                </a>
+                <a href="/tambah_nilai_Ahkam" class="tombol_Ahkam tambah">+ Tambah Nilai</a>
+            </div>
+        </div>
+
+        <div class="filter_Ahkam" style="margin-bottom: 20px; background: #f4f4f4; padding: 15px; border-radius: 8px;">
+            <form action="/" method="GET" style="display: flex; gap: 10px;">
+                <input type="text" name="search_nama" value="{{ keyword }}" placeholder="Ketik Nama Siswa untuk Memfilter & Mencetak..." style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <button type="submit" class="tombol_Ahkam">🔍 Cari Siswa</button>
+                <a href="/" class="tombol_Ahkam" style="background:#6c757d; text-decoration:none;">Reset</a>
+            </form>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert_Ahkam alert-{{ category }}" style="padding: 15px; margin-bottom: 20px; border-radius: 5px; font-weight: bold; 
+                   {% if category == 'success' %} color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb;
+                   {% elif category == 'danger' %} color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb;
+                   {% else %} color: #004085; background-color: #cce5ff; border: 1px solid #b8daff; {% endif %}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <table class="tabel_Ahkam">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Siswa</th>
+                    <th>Mata Pelajaran</th>
+                    <th>Smt</th> 
+                    <th>Tahun Ajaran</th> 
+                    <th>Tugas</th>
+                    <th>UTS</th>
+                    <th>UAS</th>
+                    <th>Nilai Akhir</th>
+                    <th>Deskripsi</th> <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in daftar_nilai_Ahkam %}
+                <tr>
+                    <td class="tebal_Ahkam">{{ n.id_nilai }}</td>
+                    <td>{{ n.nama }}</td>
+                    <td>{{ n.nama_mapel }}</td>
+                    <td style="text-align: center;">{{ n.semester }}</td> 
+                    <td style="text-align: center;">{{ n.tahun_ajaran }}</td> 
+                    <td>{{ n.nilai_tugas }}</td>
+                    <td>{{ n.nilai_uts }}</td>
+                    <td>{{ n.nilai_uas }}</td>
+                    <td class="tebal_Ahkam">{{ n.nilai_akhir }}</td>
+                    <td style="font-size: 0.85em; max-width: 250px; text-align: justify;">
+                        {{ n.deskripsi if n.deskripsi else '-' }}
+                    </td>
+                    <td>
+                        <div class="aksi_grup" style="display: flex; gap: 5px; justify-content: center;">
+                            <a href="/ubah_nilai_Ahkam/{{ n.id_nilai }}" class="tombol_Ahkam ubah">Edit</a>
+                            <a href="/hapus_nilai_Ahkam/{{ n.id_nilai }}" class="tombol_Ahkam hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="11" style="text-align: center; padding: 20px;">Belum ada data nilai atau siswa tidak ditemukan.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
